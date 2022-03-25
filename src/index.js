@@ -5,13 +5,6 @@ const EventHandler = require("./utils/EventHandler");
 const ConfigHandler = require('./utils/ConfigHandler');
 const Session = require("./utils/Session");
 
-const startSession = () => {
-  const SESSION_FILE_PATH = "../session.json";
-  if (fs.existsSync(SESSION_FILE_PATH)) {
-    return require(SESSION_FILE_PATH);
-  }
-}
-
 const startBot = () => {
   const session = Session.getInstance();
   const client = new Client({
