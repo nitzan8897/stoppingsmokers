@@ -1,3 +1,5 @@
+const stopMessage = require("../../smokers.json");
+
 module.exports.run = async (client, message) => {
     const author = message.author;
     authorPhone = await client.getContactById(author);
