@@ -8,19 +8,19 @@ module.exports.run = async (client, message) => {
 
   try {
     logCigaretteReport(author);
-    const media = MessageMedia.fromFilePath(
-      `./assets/warning${
-        Math.floor(Math.random() * fs.readdirSync("./assets").length) + 1
-      }.png`
-    );
+    // const media = MessageMedia.fromFilePath(
+    //   `./assets/warning${
+    //     Math.floor(Math.random() * fs.readdirSync("./assets").length) + 1
+    //   }.png`
+    // );
     client.sendBotMessage(
       client.chatId,
       `${
         motivations.messages[
           Math.floor(Math.random() * motivations.messages.length)
         ]
-      }`,
-      { media }
+      }`
+      // { media }
     );
   } catch (e) {
     client.sendBotMessage(
