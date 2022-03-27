@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
         }
         topSmokers.slice(0, 5).forEach((smoker, index) => {
             mentions.push(smoker._id)
-            const user = `@${smoker._id.id.name}`
+            const user = `@${smoker._id.id.user}`
             const amount = smoker.total
             const place = index + 1
             message += `במקום ה${place} עם ${amount}, ${user} \n`
