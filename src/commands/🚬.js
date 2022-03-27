@@ -6,8 +6,8 @@ module.exports.run = async (client, message) => {
 
   try {
     logCigaretteReport(author);
-    client.sendMessage(client.chatId, `${motivations.messages[Math.floor(Math.random() * motivations.messages.length)]} קיבלת +1`);
+    client.sendBotMessage(client.chatId, `${motivations.messages[Math.floor(Math.random() * motivations.messages.length)]} קיבלת +1`);
   } catch (e) {
-    client.sendMessage(client.chatId, 'וואלה איזה סאטלה בנדר לא הצלחתי לדווח עלייך נסה שוב יזין');
+    client.sendBotMessage(client.chatId, 'וואלה איזה סאטלה בנדר לא הצלחתי לדווח עלייך נסה שוב יזין');
   }
 };

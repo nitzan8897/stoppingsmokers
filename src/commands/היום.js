@@ -20,9 +20,9 @@ module.exports.run = async (client, message, args) => {
         if (!authorPhone.pushname) throw new Error('meow');
         const amount = await CigaretteReport.count({ 'userId': author, 'day': new Date().getDay(), 'month': new Date().getMonth(), 'year': new Date().getFullYear()}).exec();
         const extraMessage = getExtraMessage(amount);
-        client.sendMessage(client.chatId, `${extraMessage}, עישנת ${amount} סיגריות היום ${authorPhone.pushname}`);
+        client.sendBotMessage(client.chatId, `${extraMessage}, עישנת ${amount} סיגריות היום ${authorPhone.pushname}`);
     } catch (e) {
-        client.sendMessage(client.chatId, 'וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי');
+        client.sendBotMessage(client.chatId, 'וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי');
     }
 }
 

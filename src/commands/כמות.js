@@ -7,9 +7,9 @@ module.exports.run = async (client, message, args) => {
         const authorPhone = await client.getContactById(author);
         if (!authorPhone.pushname) throw new Error('meow');
         const amount = await CigaretteReport.count({ 'userId': author}).exec();
-        client.sendMessage(client.chatId, `${authorPhone.pushname}, יש לך כבר: ${amount}`);
+        client.sendBotMessage(client.chatId, `${authorPhone.pushname}, יש לך כבר: ${amount}`);
     } catch (e) {
-        client.sendMessage(client.chatId, 'וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי');
+        client.sendBotMessage(client.chatId, 'וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי');
     }
 }
 

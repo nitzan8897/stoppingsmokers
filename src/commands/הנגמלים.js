@@ -14,9 +14,9 @@ module.exports.run = async (client, message, args) => {
             const place = index + 1;
             message += `במקום ה${place} עם ${amount}, ${user} \n`;
         });
-        client.sendMessage(client.chatId, message);
+        client.sendBotMessage(client.chatId, message);
     } catch (e) {
-        client.sendMessage(client.chatId, 'וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי');
+        client.sendBotMessage(client.chatId, 'וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי');
     }
 }
 

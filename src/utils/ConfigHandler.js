@@ -8,6 +8,10 @@ class ConfigHandler {
 
     init() {
         this.client.chatId = testingGroup;
+        this.client.sendBotMessage = (chatId, message) => {
+            const newMessage = '----------------------------------------\n' + message + '\n----------------------------------------';
+            this.client.sendMessage(chatId, newMessage);
+        }
     }
 }
 
