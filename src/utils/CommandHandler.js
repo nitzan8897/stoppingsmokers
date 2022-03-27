@@ -19,7 +19,7 @@ class CommandHandler {
                         const pull = require(`../commands/${commandFolder}/${command}`);
                         this.client.commands.set(pull.config.name, pull);
                     });
-                    this.client.commands.set('🚬', require('../commands/דיווח.js'));
+                    this.client.commands.set('🚬', require('../commands/🚬.js'));
                 });
             });
         });
