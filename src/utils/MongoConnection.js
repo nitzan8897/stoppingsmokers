@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 class MongoConnection {
-    constructor() {
-    }
+  constructor() {}
 
-    async connectToDb() {
-        await mongoose.connect('mongodb+srv://ajreuri23:vguzrvfhaha1@cigi.veynx.mongodb.net/test');
-    }
+  async connectToDb() {
+    await mongoose.connect(
+      "mongodb+srv://ajreuri23:vguzrvfhaha1@cigi.veynx.mongodb.net/test"
+    );
+  }
 }
 
 module.exports = MongoConnection;
-
