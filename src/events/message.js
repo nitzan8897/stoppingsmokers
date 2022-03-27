@@ -15,5 +15,7 @@ module.exports = async (client, message) => {
 	const commandfile = client.commands.get(cmd.slice(prefix.length).toString().toLowerCase());
 	if (commandfile) {
 		commandfile.run(client, message, args);
+	} else {
+		client.commands.get('עזרה').run(client, message);
 	}
 }
