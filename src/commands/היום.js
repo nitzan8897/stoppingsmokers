@@ -26,7 +26,8 @@ module.exports.run = async (client, message, args) => {
     const extraMessage = getExtraMessage(amount);
     client.sendBotMessage(
       client.chatId,
-      `${extraMessage}, עישנת ${amount} סיגריות היום ${authorPhone.pushname}`
+      `${extraMessage}, עישנת ${amount} סיגריות היום @${authorPhone.id.user}`,
+      { mentions: [authorPhone] }
     );
   } catch (e) {
     client.sendBotMessage(

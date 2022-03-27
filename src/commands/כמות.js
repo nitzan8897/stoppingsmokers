@@ -8,7 +8,8 @@ module.exports.run = async (client, message, args) => {
     const amount = await CigaretteReport.count({ userId: author }).exec();
     client.sendBotMessage(
       client.chatId,
-      `${authorPhone.pushname}, יש לך כבר: ${amount}`
+      `@${authorPhone.id.user}, יש לך כבר: ${amount}`,
+      { mentions: [authorPhone] }
     );
   } catch (e) {
     client.sendBotMessage(
