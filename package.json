@@ -10,7 +10,7 @@
     "whatsapp-web.js": "^1.16.4"
   },
   "scripts": {
-    "start": "nodemon ./src/index.js"
+    "start": "nodemon ./src/index.js --ignore *.json"
   },
   "author": "",
   "license": "ISC"

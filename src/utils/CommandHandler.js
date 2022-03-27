@@ -6,22 +6,17 @@ class CommandHandler {
     }
 
     init() {
-        fs.readdir('./src/commands/', (err, commandFolders) => {
+        this.client.commands = new Map();
+        fs.readdir('./src/commands', (err, commands) => {
             if (err) console.log(err);
-            if(!commandFolders[0]) return;
+            if(!commands[0]) return;
     
-            commandFolders.forEach((commandFolder) => {
-                fs.readdir(`./src/commands/${commandFolder}`, (err, commands) => {
-                    if (!commands) return;
-            
-                    commands = commands.filter(command => command.split('.')[1] === 'js');
-                    commands.forEach((command) => {
-                        const pull = require(`../commands/${commandFolder}/${command}`);
-                        this.client.commands.set(pull.config.name, pull);
-                    });
-                    this.client.commands.set('🚬', require('../commands/🚬.js'));
-                });
+            commands = commands.filter(command => command.split('.')[1] === 'js').forEach((command) => {
+                const pull = require(`../commands/${command}`);
+                if (!pull?.config?.name) return;
+                this.client.commands.set(pull.config.name, pull);
             });
+            this.client.commands.set('🚬', require('../commands/🚬.js'));
         });
     }
 }

@@ -7,7 +7,7 @@ class ConfigHandler {
     }
 
     init() {
-        this.client.chatId = smokersGroup;
+        this.client.chatId = testingGroup;
     }
 }
 
