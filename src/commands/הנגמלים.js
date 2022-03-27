@@ -6,7 +6,7 @@ module.exports.run = async (client, message, args) => {
         const mentions = []
         const topSmokers = await CigaretteReport.aggregate([
             { $group: { _id: '$userId', total: { $sum: 1 } } },
-            { $sort: { total: -1 } },
+            { $sort: { total: 1 } },
         ]).exec()
         for (const smoker of topSmokers) {
             smoker._id = await client.getContactById(smoker._id)
