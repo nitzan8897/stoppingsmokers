@@ -10,7 +10,8 @@ module.exports.run = async (client, message, args) => {
             { $limit: 1}
         ]).exec();
         const cancerImageUrl = await client.getProfilePicUrl(cancerIdAndAmount[0]._id);
-        const cancerImage = MessageMedia.fromUrl(cancerImageUrl);
+        console.log(cancerImageUrl);
+        const cancerImage = await MessageMedia.fromUrl(cancerImageUrl);
         const cancerContact = await client.getContactById(cancerIdAndAmount[0]._id);
 
         client.sendBotMessage(
