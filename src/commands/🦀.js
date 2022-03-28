@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args) => {
 
         client.sendBotMessage(
             client.chatId,
-            `${message} @${cancerContact.id.user} , תמשיך ככה אולי יצא ממך משהו`,
+            `${message} @${cancerContact.id.user} , עישן בסיזן הזה ${cancerIdAndAmount[0].total} סיגריות`,
             { media: cancerImage, mentions: [cancerContact] }
         );
     } catch (e) {
