@@ -4,6 +4,7 @@ const EventHandler = require("./utils/EventHandler");
 const ConfigHandler = require("./utils/ConfigHandler");
 const MongoConnection = require("./utils/MongoConnection");
 const Session = require("./utils/Session");
+const IntervalMessages = require("./utils/IntervalMessages");
 
 const startBot = async () => {
   const session = Session.getInstance();
@@ -16,6 +17,7 @@ const startBot = async () => {
   new ConfigHandler(client).init();
   new CommandHandler(client).init();
   new EventHandler(client).init();
+  new IntervalMessages(client).init();
   client.initialize();
 };
 
