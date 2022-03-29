@@ -4,6 +4,7 @@ const testingGroup = "120363039173872331@g.us";
 class ConfigHandler {
   constructor(client) {
     this.client = client;
+    this.config
   }
 
   init() {

@@ -1,5 +1,17 @@
+const SeasonMember = require("../models/SeasonMember");
+const SeasonHandler = require("../utils/SeasonHandler");
+
+const addUserToSeason = async (author) => {
+  const user = await SeasonMember.findOne({ season: SeasonHandler.seasonNumber, 'userId': author}).exec();
+  if (user) return;
+
+  const newMemberInSeason = new SeasonMember({ season: SeasonHandler.seasonNumber, userId: author, amount: 0});
+  await newMemberInSeason.save();
+}
+
 module.exports = async (client, message) => {
   if (message.from !== client.chatId) return;
+  await addUserToSeason(message.author);
   if (message.body === "🚬") {
     client.commands.get("🚬").run(client, message);
     return;

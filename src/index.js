@@ -4,6 +4,8 @@ const EventHandler = require("./utils/EventHandler");
 const ConfigHandler = require("./utils/ConfigHandler");
 const MongoConnection = require("./utils/MongoConnection");
 const Session = require("./utils/Session");
+const SeasonMember = require("./models/SeasonMember");
+const SeasonHandler = require("./utils/SeasonHandler");
 
 const startBot = async () => {
   const session = Session.getInstance();
@@ -16,7 +18,7 @@ const startBot = async () => {
   new ConfigHandler(client).init();
   new CommandHandler(client).init();
   new EventHandler(client).init();
-  client.initialize();
+  await SeasonHandler.init();
 };
 
 startBot();
