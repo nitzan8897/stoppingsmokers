@@ -1,6 +1,6 @@
 const Season = require("../models/Season");
 
-class SeasonHandler {
+class SeasonManager {
     static seasonNumber;
     static seasonEnd;
 
@@ -12,6 +12,7 @@ class SeasonHandler {
         if (season) {
             this.seasonNumber = season.number;
             this.seasonEnd = season.dateEnd;
+            return;
         }
 
         await this.createNewSeason();
@@ -28,4 +29,4 @@ class SeasonHandler {
     }
 }
 
-module.exports = SeasonHandler;
+module.exports = SeasonManager;

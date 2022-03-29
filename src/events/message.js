@@ -1,11 +1,11 @@
 const SeasonMember = require("../models/SeasonMember");
-const SeasonHandler = require("../utils/SeasonHandler");
+const SeasonManager = require("../utils/SeasonManager");
 
 const addUserToSeason = async (author) => {
-  const user = await SeasonMember.findOne({ season: SeasonHandler.seasonNumber, 'userId': author}).exec();
+  const user = await SeasonMember.findOne({ season: SeasonManager.seasonNumber, 'userId': author}).exec();
   if (user) return;
 
-  const newMemberInSeason = new SeasonMember({ season: SeasonHandler.seasonNumber, userId: author, amount: 0});
+  const newMemberInSeason = new SeasonMember({ season: SeasonManager.seasonNumber, userId: author, amount: 0});
   await newMemberInSeason.save();
 }
 

@@ -1,9 +1,9 @@
 const CigaretteReport = require("../models/CigaretteReport");
 const SeasonMember = require("../models/SeasonMember");
-const SeasonHandler = require("./SeasonHandler");
+const SeasonManager = require("./SeasonManager");
 
 const incrementUserAmountInSeason = async (author) => {
-  await SeasonMember.updateOne({season: SeasonHandler.seasonNumber, userId: author}, {$inc: {amount: 1}});
+  await SeasonMember.updateOne({season: SeasonManager.seasonNumber, userId: author}, {$inc: {amount: 1}});
 }
 
 const logCigaretteReport = async (userId) => {
@@ -14,7 +14,7 @@ const logCigaretteReport = async (userId) => {
     hour: new Date().getHours(),
     date: new Date(),
     userId,
-    season: SeasonHandler.seasonNumber
+    season: SeasonManager.seasonNumber
   };
 
   try {
