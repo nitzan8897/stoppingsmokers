@@ -8,9 +8,9 @@ const getExtraMessage = (amount) => {
     } else if (amount <= 6) {
         return "תרגיע עם הכמות כפרה";
     } else if (amount <= 9) {
-        return "אני מבין אתה אובדני היום אה יזין";
-    } else if (amount <= 12) {
         return "מה יהיה איתך תגיד לי";
+    } else if (amount <= 12) {
+        return "אני מבין אתה אובדני היום אה יזין";
     } else {
         return "אברהמסון, כוכבית 9933";
     }
