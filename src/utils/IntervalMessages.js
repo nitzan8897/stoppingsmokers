@@ -1,7 +1,7 @@
 const warnings = require('../../warnings.json');
 
 class  IntervalMessages {
-    #SECONDS_IN_A_DAY;
+    #SECONDS_IN_A_DAY = 86400;
 
     constructor(client) {
         this.client = client;
