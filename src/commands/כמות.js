@@ -9,7 +9,7 @@ module.exports.run = async (client, message, args) => {
     const amount = await SeasonMember.find({ userId: author, season: SeasonManager.seasonNumber }).exec();
     client.sendBotMessage(
       client.chatId,
-      `@${authorPhone.id.user}, יש לך כבר: ${amount}`,
+      `@${authorPhone.id.user}, יש לך כבר: ${amount}\nשזה שווה ערך ל${(amount * 1.5).toFixed(1)} שקלים יא פראייר חחחחחחחחחחח`,
       { mentions: [authorPhone] }
     );
   } catch (e) {
