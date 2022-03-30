@@ -4,22 +4,36 @@ const DAYS_IN_HEBREW = ["ראשון", "שני", "שלישי", "רביעי", "ח�
 
 const getLovedDayMessage = async (userId) => {
     const mostLovedDayAndAmount = await CigaretteReport.aggregate([
-        { $match: { 'userId': userId}},
-        { $group: { _id: '$day', total: { $sum: 1 } } },
-        { $sort: { total: -1 } },
-        { $limit: 1 }
+        {$match: {'userId': userId}},
+        {$group: {_id: '$day', total: {$sum: 1}}},
+        {$sort: {total: -1}},
+        {$limit: 3}
     ]).exec();
-    return `היום האהוב עלייך לעישון הוא ${DAYS_IN_HEBREW[mostLovedDayAndAmount[0]._id]} עם ${mostLovedDayAndAmount[0].total} סיגריות בכולל`;
+    const mostLovedDay = DAYS_IN_HEBREW[mostLovedDayAndAmount[0]._id];
+    const mostLovedDayIndex = DAYS_IN_HEBREW.indexOf(mostLovedDay);
+    const introMessage = mostLovedDayIndex >= 4 ? 'אתה מת על הסופשים אה??' :
+        mostLovedDayIndex === 0 ? 'יום ראשון נופל עלייך חזק' : 'אתה בחור של אמצע שבוע';
+    const mainMessage = `היום האהוב עלייך לעישון הוא ${DAYS_IN_HEBREW[mostLovedDayAndAmount[0]._id]} עם ${mostLovedDayAndAmount[0].total} סיגריות `;
+    const extraMessage = mostLovedDayAndAmount.slice(1).filter((day) => day.total > 0).map((day) => `\nולאחריו יום ${DAYS_IN_HEBREW[day._id]} עם ${day.total} סיגריות`).join('\n');
+    return `${introMessage}\n${mainMessage} ${extraMessage}`;
 }
 
 const getLovedHourMessage = async (userId) => {
     const mostLovedHourAndAmount = await CigaretteReport.aggregate([
-        { $match: { 'userId': userId}},
-        { $group: { _id: '$hour', total: { $sum: 1 } } },
-        { $sort: { total: -1 } },
-        { $limit: 1 }
+        {$match: {'userId': userId}},
+        {$group: {_id: '$hour', total: {$sum: 1}}},
+        {$sort: {total: -1}},
+        {$limit: 5}
     ]).exec();
-    return `השעה האהובה עלייך לעישון היא ${[mostLovedHourAndAmount[0]._id + ":00"]} עם ${mostLovedHourAndAmount[0].total} סיגריות בכולל`;
+    const mostLovedHour = mostLovedHourAndAmount[0]._id;
+    const introMessage = mostLovedHour >= 0 && mostLovedHour <= 4 ? 'חיית לילה אתה אני מבין' :
+        mostLovedHour >= 19 && mostLovedHour <= 23 ? 'נופל לעישונים של הערב אתה' :
+        mostLovedHour >= 12 && mostLovedHour <= 18 ? 'עם הארוחת צהריים אתה אוהב לפרק פאקט' :
+        mostLovedHour >= 5 && mostLovedHour <= 11 ? 'כולם רצים בבוקר, רק אתה מעשן' :
+            'משהו לא ברור אתה';
+    const mainMessage = `השעה האהובה עלייך לעישון היא ${[mostLovedHourAndAmount[0]._id + ":00"]} עם ${mostLovedHourAndAmount[0].total} סיגריות בכולל`;
+    const extraMessage = mostLovedHourAndAmount.slice(1).filter((hour) => hour.total > 0).map((hour) => `\nולאחריו השעה ${hour._id + ':00'} עם ${hour.total} סיגריות`).join('\n');
+    return `${introMessage}\n${mainMessage} ${extraMessage}`;
 }
 
 module.exports.run = async (client, message, args) => {
@@ -29,11 +43,10 @@ module.exports.run = async (client, message, args) => {
         if (!authorPhone.pushname) throw new Error("meow");
         const mostLovedDayMessage = await getLovedDayMessage(author);
         const mostLovedHourMessage = await getLovedHourMessage(author);
-        const amount = await CigaretteReport.count({ userId: author }).exec();
         client.sendBotMessage(
             client.chatId,
             `סטטיסטיקות ל@${authorPhone.id.user} \n\n ${mostLovedDayMessage} \n ${mostLovedHourMessage}`,
-            { mentions: [authorPhone] }
+            {mentions: [authorPhone]}
         );
     } catch (e) {
         client.sendBotMessage(
@@ -44,6 +57,6 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.config = {
-    name: "כמות",
+    name: "סטטיסטיקה",
     args: ["@מישהו"],
 };
