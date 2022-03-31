@@ -15,12 +15,16 @@ module.exports.run = async (client, message) => {
     );
     client.sendBotMessage(
       client.chatId,
+      `meow`,
+      { media, sendMediaAsSticker: true }
+    );
+    client.sendBotMessage(
+      client.chatId,
       `${
         motivations.messages[
           Math.floor(Math.random() * motivations.messages.length)
         ]
-      }`,
-      { media, sendMediaAsSticker: true }
+      }`
     );
   } catch (e) {
     client.sendBotMessage(
