@@ -7,7 +7,7 @@ class ConfigHandler {
   }
 
   init() {
-    this.client.chatId = testingGroup;
+    this.client.chatId = smokersGroup;
     this.client.sendBotMessage = (chatId, message, options) => {
       const newMessage =
         "----------------------------------------\n" +
