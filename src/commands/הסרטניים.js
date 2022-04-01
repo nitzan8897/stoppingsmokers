@@ -1,4 +1,3 @@
-const CigaretteReport = require('../models/CigaretteReport')
 const SeasonMember = require("../models/SeasonMember");
 const SeasonManager = require("../utils/SeasonManager");
 
