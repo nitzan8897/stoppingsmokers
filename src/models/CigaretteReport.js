@@ -6,6 +6,8 @@ const CigaretteReport = mongoose.model("CigaretteReport", {
   day: Number,
   month: Number,
   year: Number,
+  date: Date,
+  season: Number
 });
 
 module.exports = CigaretteReport;
