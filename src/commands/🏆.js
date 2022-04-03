@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
 
         client.sendBotMessage(
             client.chatId,
-            `${message} @${winnerContact.id.user} תמשיך ככה, אולי יצא ממך משהו, עישנת בסיזן הזה רק ${winnerIdAndAmount[0].amount}`,
+            `${message} @${winnerContact.id.user} תמשיך ככה, אולי יצא ממך משהו, עישנת בסיזן הזה רק ${winnerIdAndAmount[0].total}`,
             { media: winnerImage, mentions: [winnerContact] }
         );
     } catch (e) {
