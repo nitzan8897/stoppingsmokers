@@ -1,10 +1,12 @@
 const CigaretteReport = require("../models/CigaretteReport");
 const {MessageMedia} = require("whatsapp-web.js");
+const SeasonManager = require("../utils/SeasonManager");
 
 module.exports.run = async (client, message, args) => {
     try {
         const message = 'זה הילד הטוב שלנו, ';
         const winnerIdAndAmount = await CigaretteReport.aggregate([
+            { $match: { season: SeasonManager.seasonNumber}},
             { $group: { _id: '$userId', total: { $sum: 1 } } },
             { $sort: { total: 1 } },
             { $limit: 1}

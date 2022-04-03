@@ -5,14 +5,21 @@ const fs = require('fs')
 
 module.exports.run = async (client, message) => {
     const author = message.author
-
     try {
         logCigaretteReport(author)
-        // const media = MessageMedia.fromFilePath(
-        //   `./assets/warning${
-        //     Math.floor(Math.random() * fs.readdirSync("./assets").length) + 1
-        //   }.png`
-        // );
+        console.log('logged')
+        const media = MessageMedia.fromFilePath(
+            `./assets/warning${
+                Math.floor(Math.random() * fs.readdirSync('./assets').length) +
+                1
+            }.png`
+        )
+        console.log('sticker got')
+        client.sendBotMessage(client.chatId, `meow`, {
+            media,
+            sendMediaAsSticker: true,
+        })
+        console.log('sticker sent')
         client.sendBotMessage(
             client.chatId,
             `${
@@ -20,8 +27,8 @@ module.exports.run = async (client, message) => {
                     Math.floor(Math.random() * motivations.messages.length)
                 ]
             }`
-            // { media }
         )
+        console.log('message sent')
     } catch (e) {
         client.sendBotMessage(
             client.chatId,

@@ -5,7 +5,7 @@ module.exports.run = async (client, message, args) => {
   try {
     const authorPhone = await client.getContactById(author);
     if (!authorPhone.pushname) throw new Error("meow");
-    const amount = await CigaretteReport.count({ userId: author }).exec();
+    const amount = await CigaretteReport.count({ 'userId': author}).exec();
     client.sendBotMessage(
       client.chatId,
       `@${authorPhone.id.user}, יש לך כבר: ${amount}\nשזה שווה ערך ל${(amount * 1.5).toFixed(1)} שקלים יא פראייר חחחחחחחחחחח`,

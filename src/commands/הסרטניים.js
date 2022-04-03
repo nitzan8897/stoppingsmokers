@@ -1,17 +1,20 @@
-const CigaretteReport = require('../models/CigaretteReport')
+const SeasonManager = require("../utils/SeasonManager");
+const CigaretteReport = require("../models/CigaretteReport");
 
 module.exports.run = async (client, message, args) => {
     try {
         let message = ''
         const mentions = []
         const topSmokers = await CigaretteReport.aggregate([
+            { $match: { season: SeasonManager.seasonNumber}},
             { $group: { _id: '$userId', total: { $sum: 1 } } },
             { $sort: { total: -1 } },
-        ]).exec()
+            { $limit: 5 }
+        ]).exec();
         for (const smoker of topSmokers) {
-            smoker._id = await client.getContactById(smoker._id)
+            smoker._id = await client.getContactById(smoker._id);
         }
-        topSmokers.slice(0, 5).forEach((smoker, index) => {
+        topSmokers.forEach((smoker, index) => {
             mentions.push(smoker._id)
             const user = `@${smoker._id.id.user}`
             const amount = smoker.total
