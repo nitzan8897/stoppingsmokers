@@ -1,20 +1,19 @@
 const CigaretteReport = require("../models/CigaretteReport");
 const {MessageMedia} = require("whatsapp-web.js");
-const SeasonMember = require("../models/SeasonMember");
 const SeasonManager = require("../utils/SeasonManager");
 
 module.exports.run = async (client, message, args) => {
     try {
         const message = 'זה הילד הטוב שלנו, ';
-        const winnerIdAndAmount = await SeasonMember.find({season: SeasonManager.seasonNumber}).sort({amount: 1}).limit(1).exec();
-        // const winnerIdAndAmount = await CigaretteReport.aggregate([
-        //     { $group: { _id: '$userId', total: { $sum: 1 } } },
-        //     { $sort: { total: 1 } },
-        //     { $limit: 1}
-        // ]).exec();
-        const winnerImageUrl = await client.getProfilePicUrl(winnerIdAndAmount[0].userId);
+        const winnerIdAndAmount = await CigaretteReport.aggregate([
+            { $match: { season: SeasonManager.seasonNumber}},
+            { $group: { _id: '$userId', total: { $sum: 1 } } },
+            { $sort: { total: 1 } },
+            { $limit: 1}
+        ]).exec();
+        const winnerImageUrl = await client.getProfilePicUrl(winnerIdAndAmount[0]._id);
         const winnerImage = await MessageMedia.fromUrl(winnerImageUrl);
-        const winnerContact = await client.getContactById(winnerIdAndAmount[0].userId);
+        const winnerContact = await client.getContactById(winnerIdAndAmount[0]._id);
 
         client.sendBotMessage(
             client.chatId,
