@@ -6,6 +6,7 @@ const MongoConnection = require('./utils/MongoConnection')
 const Session = require('./utils/Session')
 const SeasonManager = require('./utils/SeasonManager')
 const IntervalMessages = require('./utils/IntervalMessages')
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 const startBot = async () => {
     const session = Session.getInstance()

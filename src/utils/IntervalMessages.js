@@ -68,7 +68,9 @@ class IntervalMessages {
             }
         }
         if (mentions.length === 0) return
-        this.client.sendBotMessage(this.client.chatId, message, { mentions })
+        this.client.sendBotMessage(this.client.chatId, message, {
+            mentions: mentions,
+        })
     }
 
     async #startSeasonMessageInterval() {
