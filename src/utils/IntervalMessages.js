@@ -1,4 +1,6 @@
-const warnings = require('../../config/warnings.json')
+const warnings = require('../../warnings.json')
+const SeasonManager = require('./SeasonManager')
+const CigaretteReport = require('../models/CigaretteReport')
 
 class IntervalMessages {
     #SECONDS_IN_A_DAY = 86400
