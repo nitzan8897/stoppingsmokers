@@ -1,4 +1,4 @@
-const warnings = require('../../warnings.json')
+const warnings = require('../../config/warnings.json')
 const SeasonManager = require('./SeasonManager')
 const CigaretteReport = require('../models/CigaretteReport')
 
