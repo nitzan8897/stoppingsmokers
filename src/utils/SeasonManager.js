@@ -18,9 +18,9 @@ class SeasonManager {
 
     static async createNewSeason() {
         const lastSeason = await Season.find({$orderby: { dateEnd: -1}}).exec();
-        const lastSeasonNumber = lastSeason?.number || 0;
+        const lastSeasonNumber = lastSeason[0].number || 0;
         const now = new Date();
-        this.seasonNumber = lastSeasonNumber + 1
+        this.seasonNumber = lastSeasonNumber + 1;
         this.seasonEnd = new Date(now.getTime() + this.seasonTimeInDays * 24 * 60 * 60 * 1000);
         const newSeason = new Season({ number: this.seasonNumber, dateStart: new Date(), dateEnd: this.seasonEnd});
         await newSeason.save();
