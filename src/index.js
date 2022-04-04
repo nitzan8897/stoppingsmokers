@@ -24,4 +24,4 @@ const startBot = async () => {
     client.initialize()
 }
 
-startBot()
+startBot();
