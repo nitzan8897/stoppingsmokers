@@ -8,13 +8,14 @@ const SeasonManager = require('./SeasonManager')
 const logCigaretteReport = async (userId) => {
     const cigaretteReportLog = {
         month: new Date().getMonth() + 1, // js Date.getMonth returns from 0.
-        day: new Date().getDay(),
+        day: new Date().getDay() + 1, // same here
         year: new Date().getFullYear(),
         hour: new Date().getHours(),
         date: new Date(),
         userId,
         season: SeasonManager.seasonNumber,
     }
+
     try {
         // await incrementUserAmountInSeason();
         const report = new CigaretteReport(cigaretteReportLog)
