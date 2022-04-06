@@ -3,7 +3,8 @@ const CigaretteReport = require("../models/CigaretteReport");
 async function getSeasonAmountMessage(userId) {
     const amountPerSeason = await CigaretteReport.aggregate([
         {$match: {'userId': userId}},
-        {$group: {_id: '$season', total: {$sum: 1}}}
+        {$group: {_id: '$season', total: {$sum: 1}}},
+        {$sort: { _id: 1 }}
     ]).exec();
     let message = ``;
     amountPerSeason.forEach((season, index) => {
