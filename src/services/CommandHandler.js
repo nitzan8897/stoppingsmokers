@@ -18,7 +18,7 @@ class CommandHandler {
           if (!pull?.config?.name) return;
           this.client.commands.set(pull.config.name, pull);
         });
-      this.client.commands.set("🚬", require("../commands/\uD83D\uDEAC.js"));
+      this.client.commands.set("🚬", require("../commands/🚬.js"));
     });
   }
 }
