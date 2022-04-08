@@ -63,7 +63,7 @@ class IntervalMessages {
             if (amount === 0) {
                 const contact = await this.client.getContactById(contactId)
                 message += ` @${contact.id.user}`
-                mentions.push(amount)
+                mentions.push(contact)
             }
         }
         if (mentions.length === 0) return
