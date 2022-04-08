@@ -1,5 +1,5 @@
 const motivations = require('../../config/motivation.json')
-const logCigaretteReport = require('../utils/CigaretteLogger')
+const logCigaretteReport = require('../services/CigaretteLogger')
 const { MessageMedia } = require('whatsapp-web.js')
 const fs = require('fs')
 
