@@ -1,4 +1,6 @@
 const CigaretteReport = require("../models/CigaretteReport");
+const {getTaggedPerson} = require("../utils/functions");
+const {getAmountInADayOfUser} = require("../utils/queries");
 
 const getExtraMessage = (amount) => {
     if (amount === 0) {
@@ -17,28 +19,17 @@ const getExtraMessage = (amount) => {
 };
 
 module.exports.run = async (client, message, args) => {
-    const author = args && args[0] ? args[0].slice(1) + "@c.us" : message.author;
-    try {
-        const authorPhone = await client.getContactById(author);
-        if (!authorPhone.pushname) throw new Error("meow");
-        const amount = await CigaretteReport.count({
-            userId: author,
-            day: new Date().getDay(),
-            month: new Date().getMonth(),
-            year: new Date().getFullYear(),
-        }).exec();
-        const extraMessage = getExtraMessage(amount);
-        client.sendBotMessage(
-            client.chatId,
-            `${extraMessage}, עישנת ${amount} סיגריות היום @${authorPhone.id.user}`,
-            {mentions: [authorPhone]}
-        );
-    } catch (e) {
-        client.sendBotMessage(
-            client.chatId,
-            "וואלה לא יודע מה קרה התרחשה שגיאה אחשילי פעם הבאה אולי"
-        );
-    }
+    const author = getTaggedPerson(message, args);
+    const authorContact = await client.getContactById(author);
+    if (!authorContact.pushname) throw new Error("meow");
+
+    const amount = getAmountInADayOfUser(author, new Date());
+    const extraMessage = getExtraMessage(amount);
+    client.sendBotMessage(
+        client.chatId,
+        `${extraMessage}, עישנת ${amount} סיגריות היום @${authorContact.id.user}`,
+        {mentions: [authorContact]}
+    );
 };
 
 module.exports.config = {
