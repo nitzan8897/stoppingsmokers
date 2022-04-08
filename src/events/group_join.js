@@ -1,7 +1,10 @@
-const { MessageMedia } = require('whatsapp-web.js')
+const {MessageMedia} = require('whatsapp-web.js')
 
 module.exports = async (client, notification) => {
-    const contacts = await notification.getRecipients()
+    const chatId = await notification.getChat();
+    if (client.chatId !== chatId) return;
+
+    const contacts = await notification.getRecipients();
     for (const contact of contacts) {
         const contactPictureUrl = await contact.getProfilePicUrl();
         if (contactPictureUrl) {

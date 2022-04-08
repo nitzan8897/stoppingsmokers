@@ -12,7 +12,7 @@
     "whatsapp-web.js": "^1.16.5"
   },
   "scripts": {
-    "start": "nodemon ./src/index.js --ignore *.json",
+    "start": "node ./src/index.js",
     "start:dev": "cross-env NODE_ENV=test npm start",
     "start:prod": "cross-env NODE_ENV=prod npm start"
   },
