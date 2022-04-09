@@ -59,7 +59,7 @@ class IntervalMessages {
         const mentions = []
         for (const contactId of contacts) {
             const today = new Date();
-            const amount = getAmountInADayOfUser(contactId, today);
+            const amount = await getAmountInADayOfUser(contactId, today);
             if (amount === 0) {
                 const contact = await this.client.getContactById(contactId)
                 message += ` @${contact.id.user}`

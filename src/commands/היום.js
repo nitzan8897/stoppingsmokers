@@ -21,9 +21,9 @@ const getExtraMessage = (amount) => {
 module.exports.run = async (client, message, args) => {
     const author = getTaggedPerson(message, args);
     const authorContact = await client.getContactById(author);
-    if (!authorContact.pushname) throw new Error("meow");
+    if (!authorContact.pushname) throw Error("meow");
 
-    const amount = getAmountInADayOfUser(author, new Date());
+    const amount = await getAmountInADayOfUser(author, new Date());
     const extraMessage = getExtraMessage(amount);
     client.sendBotMessage(
         client.chatId,

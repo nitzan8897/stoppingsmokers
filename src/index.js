@@ -1,11 +1,11 @@
 const { Client, LegacySessionAuth } = require('whatsapp-web.js')
-const CommandHandler = require('./utils/CommandHandler')
-const EventHandler = require('./utils/EventHandler')
-const ConfigHandler = require('./utils/ConfigHandler')
-const MongoConnection = require('./utils/MongoConnection')
-const Session = require('./utils/Session')
-const SeasonManager = require('./utils/SeasonManager')
-const IntervalMessages = require('./utils/IntervalMessages')
+const CommandHandler = require('./services/CommandHandler')
+const EventHandler = require('./services/EventHandler')
+const ConfigHandler = require('./services/ConfigHandler')
+const MongoConnection = require('./services/MongoConnection')
+const Session = require('./services/Session')
+const SeasonManager = require('./services/SeasonManager')
+const IntervalMessages = require('./services/IntervalMessages')
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 const startBot = async () => {

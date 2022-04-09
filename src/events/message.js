@@ -13,7 +13,7 @@ module.exports = async (client, message) => {
     if (message.from !== client.chatId) return;
 //  await addUserToSeason(message.author);
     if (message.body === "🚬") {
-        client.commands.get("🚬").run(client);
+        client.commands.get("🚬").run(client, message);
         return;
     }
 
@@ -27,7 +27,7 @@ module.exports = async (client, message) => {
     const commandfile = client.commands.get(command.slice(prefix.length).toString().toLowerCase());
     try {
         if (commandfile) {
-            commandfile.run(client);
+            commandfile.run(client, message, args);
         } else {
             client.commands.get("עזרה").run(client);
         }

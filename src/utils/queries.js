@@ -29,6 +29,7 @@ const getAmountInADayOfUser = async (userId, date) => {
         day: date.getDay(),
         month: date.getMonth(),
         year: date.getFullYear(),
+        season: SeasonManager.seasonNumber
     }).exec();
 
     return amountInADay;

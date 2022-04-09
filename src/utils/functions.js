@@ -2,7 +2,7 @@ const getTaggedPerson = (message, args) => {
     return args && args[0] ? args[0].slice(1) + "@c.us" : message.author;
 }
 
-getTopSmokersMessage = (topSmokers) => {
+const getTopSmokersMessage = (topSmokers, mentions) => {
     let message = ``;
     topSmokers.forEach((smoker, index) => {
         mentions.push(smoker._id)

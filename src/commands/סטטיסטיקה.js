@@ -2,7 +2,7 @@ const {DAYS_IN_HEBREW, getTaggedPerson} = require("../utils/functions");
 const {getMostCommonTimestampOfUser} = require("../utils/queries");
 
 const getLovedDayMessage = async (userId) => {
-    const mostLovedDayAndAmount = getMostCommonTimestampOfUser(userId,'$day', 3);
+    const mostLovedDayAndAmount = await getMostCommonTimestampOfUser(userId,'$day', 3);
     const mostLovedDay = DAYS_IN_HEBREW[mostLovedDayAndAmount[0]._id];
     const mostLovedDayIndex = DAYS_IN_HEBREW.indexOf(mostLovedDay);
     const introMessage = mostLovedDayIndex >= 4 ? 'אתה מת על הסופשים אה??' :
@@ -13,7 +13,7 @@ const getLovedDayMessage = async (userId) => {
 }
 
 const getLovedHourMessage = async (userId) => {
-    const mostLovedHourAndAmount = getMostCommonTimestampOfUser(userId,'$hour', 5);
+    const mostLovedHourAndAmount = await getMostCommonTimestampOfUser(userId,'$hour', 5);
     const mostLovedHour = mostLovedHourAndAmount[0]._id;
     const introMessage = mostLovedHour >= 0 && mostLovedHour <= 4 ? 'חיית לילה אתה אני מבין' :
         mostLovedHour >= 19 && mostLovedHour <= 23 ? 'נופל לעישונים של הערב אתה' :

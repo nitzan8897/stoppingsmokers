@@ -4,7 +4,7 @@ const { MessageMedia } = require('whatsapp-web.js')
 const fs = require('fs')
 
 module.exports.run = async (client, message) => {
-    const author = message.author
+    const author = message.author;
     try {
         logCigaretteReport(author)
         console.log('logged')
