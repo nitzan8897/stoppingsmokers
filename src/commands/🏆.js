@@ -7,6 +7,7 @@ module.exports.run = async (client) => {
     const winnerImageUrl = await client.getProfilePicUrl(winnerIdAndAmount[0]._id);
     const winnerImage = await MessageMedia.fromUrl(winnerImageUrl);
     const winnerContact = await client.getContactById(winnerIdAndAmount[0]._id);
+    
     client.sendBotMessage(
         client.chatId,
         `${message} @${winnerContact.id.user} תמשיך ככה, אולי יצא ממך משהו, עישנת בסיזן הזה רק ${winnerIdAndAmount[0].total}`,

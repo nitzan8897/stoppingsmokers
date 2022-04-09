@@ -3,7 +3,7 @@ const {getTopNSmokersInSeason} = require("../utils/queries");
 
 module.exports.run = async (client) => {
     const message = 'אותו תזכרו למה לכו תדעו מה יהיה איתו, ';
-    const cancerIdAndAmount = getTopNSmokersInSeason(1, -1);
+    const cancerIdAndAmount = await getTopNSmokersInSeason(1, -1);
     const cancerImageUrl = await client.getProfilePicUrl(cancerIdAndAmount[0]._id);
     const cancerImage = await MessageMedia.fromUrl(cancerImageUrl);
     const cancerContact = await client.getContactById(cancerIdAndAmount[0]._id);
