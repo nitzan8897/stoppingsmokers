@@ -1,6 +1,7 @@
 const warnings = require('../../config/warnings.json')
 const SeasonManager = require('./SeasonManager')
 const CigaretteReport = require('../models/CigaretteReport')
+const {getAmountInADayOfUser} = require("../utils/queries");
 
 class IntervalMessages {
     #SECONDS_IN_A_DAY = 86400
@@ -57,16 +58,12 @@ class IntervalMessages {
             .exec()
         const mentions = []
         for (const contactId of contacts) {
-            const amount = await CigaretteReport.count({
-                userId: contactId,
-                day: new Date().getDay(),
-                month: new Date().getMonth(),
-                year: new Date().getFullYear(),
-            }).exec()
+            const today = new Date();
+            const amount = await getAmountInADayOfUser(contactId, today);
             if (amount === 0) {
                 const contact = await this.client.getContactById(contactId)
                 message += ` @${contact.id.user}`
-                mentions.push(amount)
+                mentions.push(contact)
             }
         }
         if (mentions.length === 0) return
