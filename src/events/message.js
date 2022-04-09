@@ -27,9 +27,9 @@ module.exports = async (client, message) => {
     const commandfile = client.commands.get(command.slice(prefix.length).toString().toLowerCase());
     try {
         if (commandfile) {
-            commandfile.run(client, message, args);
+            await commandfile.run(client, message, args);
         } else {
-            client.commands.get("עזרה").run(client);
+            await client.commands.get("עזרה").run(client);
         }
     } catch (e) {
         client.sendBotMessage(
