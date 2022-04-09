@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "dependencies": {
+    "chart.js-image": "^6.0.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "mongoose": "^6.2.8",

@@ -59,4 +59,28 @@ const getAveragePerDayOfUser = async (userId) => {
     return amountPerDay[0].average;
 }
 
-module.exports = {getTopNSmokersInSeason, getMostCommonTimestampOfUser, getAmountInADayOfUser, getAveragePerDayOfUser};
+const getCountOfUserThisSeason = async (userId) => {
+    const amount = await CigaretteReport.count({
+        userId: userId,
+        season: SeasonManager.seasonNumber
+    }).exec();
+
+    return amount;
+}
+
+const getCountPerSeasonOfUser = async (userId) => {
+    const amountPerSeason = await CigaretteReport.aggregate([
+        {$match: {'userId': userId}},
+        {$group: {_id: '$season', total: {$sum: 1}}},
+        {$sort: {_id: 1}}
+    ]).exec();
+
+    return amountPerSeason;
+}
+
+module.exports = {getTopNSmokersInSeason,
+    getMostCommonTimestampOfUser,
+    getAmountInADayOfUser,
+    getAveragePerDayOfUser,
+    getCountOfUserThisSeason,
+    getCountPerSeasonOfUser};
