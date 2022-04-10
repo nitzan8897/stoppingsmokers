@@ -17,4 +17,20 @@ const getTopSmokersMessage = (topSmokers, mentions) => {
 
 const DAYS_IN_HEBREW = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
 
-module.exports = {getTaggedPerson, DAYS_IN_HEBREW, getTopSmokersMessage};
+const getIntroMessageForCount = (amount) => {
+    if (amount === 0) {
+        return "פייי ילד טוב אתה אינעל העולם";
+    } else if (amount <= 3) {
+        return "וואלה אתה בסדר אתה";
+    } else if (amount <= 6) {
+        return "תרגיע עם הכמות כפרה";
+    } else if (amount <= 9) {
+        return "מה יהיה איתך תגיד לי";
+    } else if (amount <= 12) {
+        return "אני מבין אתה אובדני היום אה יזין";
+    } else {
+        return "אברהמסון, כוכבית 9933";
+    }
+};
+
+module.exports = {getTaggedPerson, DAYS_IN_HEBREW, getTopSmokersMessage, getIntroMessageForCount};

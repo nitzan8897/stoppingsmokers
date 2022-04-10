@@ -1,5 +1,5 @@
-const {DAYS_IN_HEBREW, getTaggedPerson} = require("../utils/functions");
-const {getMostCommonTimestampOfUser, getCountOfUser} = require("../utils/queries");
+const {DAYS_IN_HEBREW, getTaggedPerson, getIntroMessageForCount} = require("../utils/functions");
+const {getMostCommonTimestampOfUser, getCountOfUser, getAveragePerDayOfUser} = require("../utils/queries");
 
 const getLovedDayMessage = async (userId, totalAmount) => {
     const mostLovedDayAndAmount = await getMostCommonTimestampOfUser(userId,'$day', 3);
@@ -25,6 +25,13 @@ const getLovedHourMessage = async (userId, totalAmount) => {
     return `\n*${introMessage}*\n${mainMessage} ${extraMessage}`;
 }
 
+const getAveragePerDayMessage = async (userId) => {
+    const averagePerDay = getAveragePerDayOfUser(userId);
+    const introMessage = getIntroMessageForCount(averagePerDay);
+
+    return `\n${introMessage}, אתה מעשן ${averagePerDay} סיגריות ביום בממוצע`;
+}
+
 module.exports.run = async (client, message, args) => {
     const author = getTaggedPerson(message, args);
     const authorContact = await client.getContactById(author);
@@ -33,6 +40,7 @@ module.exports.run = async (client, message, args) => {
     const totalAmount = await getCountOfUser(author);
     const mostLovedDayMessage = await getLovedDayMessage(author, totalAmount);
     const mostLovedHourMessage = await getLovedHourMessage(author, totalAmount);
+    const averagePerDayMessage = await getAveragePerDayMessage(author);
     client.sendBotMessage(
         client.chatId,
         `סטטיסטיקות ל@${authorContact.id.user} \n\n ${mostLovedDayMessage} \n ${mostLovedHourMessage}`,
