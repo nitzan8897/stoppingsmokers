@@ -84,6 +84,12 @@ const getCountOfUser = async (userId) => {
     return count;
 }
 
+const getLastCigaretteTimeOfUser = async (userId) => {
+    const lastCigaretteTime = await CigaretteReport.findOne({'userId': userId}).sort({date: -1}).select('date').exec();
+
+    return lastCigaretteTime;
+}
+
 
 module.exports = {getTopNSmokersInSeason,
     getMostCommonTimestampOfUser,
@@ -91,4 +97,5 @@ module.exports = {getTopNSmokersInSeason,
     getAveragePerDayOfUser,
     getCountOfUserThisSeason,
     getCountPerSeasonOfUser,
-    getCountOfUser};
+    getCountOfUser,
+    getLastCigaretteTimeOfUser};
