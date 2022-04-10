@@ -78,9 +78,17 @@ const getCountPerSeasonOfUser = async (userId) => {
     return amountPerSeason;
 }
 
+const getCountOfUser = async (userId) => {
+    const count = await CigaretteReport.count({'userId': userId}).exec();
+
+    return count;
+}
+
+
 module.exports = {getTopNSmokersInSeason,
     getMostCommonTimestampOfUser,
     getAmountInADayOfUser,
     getAveragePerDayOfUser,
     getCountOfUserThisSeason,
-    getCountPerSeasonOfUser};
+    getCountPerSeasonOfUser,
+    getCountOfUser};
