@@ -24,12 +24,12 @@ const getMostCommonTimestampOfUser = async (userId, timestamp, limit) => {
 }
 
 const getAmountInADayOfUser = async (userId, date) => {
+    const dayStartDate = new Date(date).setUTCHours(0, 0, 0, 0);
+    const dayEndDate = new Date(date).setUTCHours(23, 59, 59, 999);
+
     const amountInADay = await CigaretteReport.count({
-        userId,
-        day: date.getDay(),
-        month: date.getMonth(),
-        year: date.getFullYear(),
-        season: SeasonManager.seasonNumber
+        date: { $lte: dayEndDate, $gte: dayStartDate },
+        userId: userId
     }).exec();
 
     return amountInADay;
