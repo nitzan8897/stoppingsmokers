@@ -1,4 +1,9 @@
-const { Client, LegacySessionAuth } = require('whatsapp-web.js')
+const {
+    Client,
+    LegacySessionAuth,
+    LocalAuth,
+    NoAuth,
+} = require('whatsapp-web.js')
 const CommandHandler = require('./services/CommandHandler')
 const EventHandler = require('./services/EventHandler')
 const ConfigHandler = require('./services/ConfigHandler')
@@ -11,9 +16,7 @@ require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 const startBot = async () => {
     const session = Session.getInstance()
     const client = new Client({
-        authStrategy: new LegacySessionAuth({
-            session: session.sessionData,
-        }),
+        authStrategy: new LocalAuth({ dataPath: './.wwebjs_auth/session' }),
     })
     await new MongoConnection().connectToDb()
     new ConfigHandler(client).init()
@@ -24,4 +27,4 @@ const startBot = async () => {
     client.initialize()
 }
 
-startBot();
+startBot()

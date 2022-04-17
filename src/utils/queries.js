@@ -24,8 +24,8 @@ const getMostCommonTimestampOfUser = async (userId, timestamp, limit) => {
 }
 
 const getAmountInADayOfUser = async (userId, date) => {
-    const dayStartDate = new Date(date).setUTCHours(0, 0, 0, 0);
-    const dayEndDate = new Date(date).setUTCHours(23, 59, 59, 999);
+    const dayStartDate = new Date(date).setHours(0, 0, 0, 0);
+    const dayEndDate = new Date(date).setHours(23, 59, 59, 999);
 
     const amountInADay = await CigaretteReport.count({
         date: { $lte: dayEndDate, $gte: dayStartDate },
@@ -90,6 +90,25 @@ const getLastCigaretteTimeOfUser = async (userId) => {
     return lastCigaretteTime;
 }
 
+const insertReportManually = async (userId, date, season) => {
+    const cigaretteReportLog = {
+        month: new Date(date).getMonth(),
+        day: new Date(date).getDay(),
+        year: new Date(date).getFullYear(),
+        hour: new Date(date).getHours(),
+        date: new Date(date),
+        userId,
+        season
+    }
+
+    try {
+        const report = new CigaretteReport(cigaretteReportLog)
+        await report.save()
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 
 module.exports = {getTopNSmokersInSeason,
     getMostCommonTimestampOfUser,
@@ -98,4 +117,5 @@ module.exports = {getTopNSmokersInSeason,
     getCountOfUserThisSeason,
     getCountPerSeasonOfUser,
     getCountOfUser,
-    getLastCigaretteTimeOfUser};
+    getLastCigaretteTimeOfUser,
+    insertReportManually};

@@ -10,6 +10,7 @@ class SeasonManager {
         if (season) {
             this.seasonNumber = season.number;
             this.seasonEnd = season.dateEnd;
+            console.log("Started SeasonManager with season number: " + this.seasonNumber);
             return;
         }
 

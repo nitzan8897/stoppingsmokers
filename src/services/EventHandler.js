@@ -14,6 +14,7 @@ class EventHandler {
       const name = file.split(".")[0];
       this.client.on(name, event.bind(null, this.client));
     }
+    console.log("Initialized Event Handler");
   }
 }
 

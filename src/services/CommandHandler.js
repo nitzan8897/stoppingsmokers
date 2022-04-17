@@ -20,6 +20,7 @@ class CommandHandler {
         });
       this.client.commands.set("🚬", require("../commands/🚬.js"));
     });
+    console.log("Initialized Command Handler");
   }
 }
 

@@ -2,3 +2,4 @@ node_modules
 session.json
 .idea/
 .vscode/
+.wwebjs_auth
