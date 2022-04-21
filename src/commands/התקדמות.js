@@ -3,6 +3,7 @@ const {getTaggedPerson} = require("../utils/functions");
 const ChartJSImage = require('chart.js-image');
 const {MessageMedia} = require("whatsapp-web.js");
 const {getCountPerSeasonOfUser} = require("../utils/queries");
+const SeasonManager = require("../services/SeasonManager");
 
 const createNewChartObject = () => {
     return {
@@ -49,11 +50,16 @@ const createNewChartObject = () => {
 
 const getSeasonProgressChart = async (userId, name) => {
     const chart = createNewChartObject();
-    const amountPerSeason = await getCountPerSeasonOfUser(userId);
-
-    amountPerSeason.forEach((season, index) => {
-        chart.data.labels.push((index + 1).toString());
-        chart.data.datasets[0].data.push((season.total).toString());
+    let amountPerSeason = await getCountPerSeasonOfUser('972548023436@c.us');
+    const participatedSeasons = new Map();
+    amountPerSeason.forEach((season, index) => participatedSeasons.set(index + 1, season.total));
+    amountPerSeason = [];
+    for (let season = 1; season <= SeasonManager.seasonNumber; season++) {
+        amountPerSeason.push({number: season, total: participatedSeasons.get(season) ?? 0});
+    }
+    amountPerSeason.forEach((season) => {
+        chart.data.labels.push(season.number.toString());
+        chart.data.datasets[0].data.push(season.total.toString());
     });
     chart.data.datasets[0].label = name;
 
