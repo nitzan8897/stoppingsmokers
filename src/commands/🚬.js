@@ -3,10 +3,11 @@ const logCigaretteReport = require('../services/CigaretteLogger')
 const { MessageMedia } = require('whatsapp-web.js')
 const fs = require('fs')
 
-module.exports.run = async (client, message) => {
+module.exports.run = async (client, message, date) => {
     const author = message.author;
     try {
-        logCigaretteReport(author)
+        const logDate = date ? date : new Date();
+        logCigaretteReport(author, logDate);
         console.log('logged')
         const media = MessageMedia.fromFilePath(
             `./assets/warning${

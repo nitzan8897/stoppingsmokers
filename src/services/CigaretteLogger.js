@@ -5,13 +5,13 @@ const SeasonManager = require('./SeasonManager')
 //   await SeasonMember.updateOne({season: SeasonManager.seasonNumber, userId: author}, {$inc: {amount: 1}});
 // }
 
-const logCigaretteReport = async (userId) => {
+const logCigaretteReport = async (userId, date) => {
     const cigaretteReportLog = {
-        month: new Date().getMonth(), // js Date.getMonth returns from 0.
-        day: new Date().getDay(), // same here
-        year: new Date().getFullYear(),
-        hour: new Date().getHours(),
-        date: new Date(),
+        month: date.getMonth(), // js Date.getMonth returns from 0.
+        day: date.getDay(), // same here
+        year: date.getFullYear(),
+        hour: date.getHours(),
+        date: date,
         userId,
         season: SeasonManager.seasonNumber,
     }

@@ -6,11 +6,13 @@ class ClientUtils {
         try {
             const chat = await client.getChatById(client.chatId);
             console.log(chat);
-            const messages = await chat.fetchMessages();
+            const messages = await chat.fetchMessages({limit: 300});
             const lastCigaretteReport = await CigaretteReport.find().sort({date: -1}).limit(1).exec();
-            messages.filter((message) => new Date(message.timestamp) > lastCigaretteReport[0].date).forEach((message) => {
-                onMessage(client, message);
-            });
+            const relevantMessages = messages.filter((message) => new Date(message.timestamp * 1000) > lastCigaretteReport[0].date && message.body === '🚬');
+            for (const message of relevantMessages) {
+                onMessage(client, message, {date: new Date(message.timestamp * 1000)});
+                await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+            }
         } catch (e) {
             console.error(e);
         }

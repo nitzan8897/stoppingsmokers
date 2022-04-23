@@ -9,11 +9,11 @@ const SeasonManager = require("../services/SeasonManager");
 //   await newMemberInSeason.save();
 // }
 
-module.exports = async (client, message) => {
+module.exports = async (client, message, extraOptions) => {
     if (message.from !== client.chatId) return;
 //  await addUserToSeason(message.author);
     if (message.body === "🚬") {
-        client.commands.get("🚬").run(client, message);
+        client.commands.get("🚬").run(client, message, extraOptions?.date);
         return;
     }
 

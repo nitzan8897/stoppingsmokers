@@ -11,6 +11,7 @@ const MongoConnection = require('./services/MongoConnection')
 const Session = require('./services/Session')
 const SeasonManager = require('./services/SeasonManager')
 const IntervalMessages = require('./services/IntervalMessages')
+const ClientUtils = require('./services/ClientUtils')
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 const startBot = async () => {
@@ -24,7 +25,8 @@ const startBot = async () => {
     new EventHandler(client).init()
     await SeasonManager.init()
     new IntervalMessages(client).init()
-    client.initialize()
+    await client.initialize()
+    await ClientUtils.catchUpOnMessages(client);
 }
 
 startBot()
