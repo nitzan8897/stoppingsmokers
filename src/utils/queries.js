@@ -109,6 +109,10 @@ const insertReportManually = async (userId, date, season) => {
     }
 }
 
+const removeAllReportsOfUser = async (userId) => {
+    await CigaretteReport.find({ 'userId': userId }).delete().exec();
+}
+
 
 module.exports = {getTopNSmokersInSeason,
     getMostCommonTimestampOfUser,
@@ -118,4 +122,5 @@ module.exports = {getTopNSmokersInSeason,
     getCountPerSeasonOfUser,
     getCountOfUser,
     getLastCigaretteTimeOfUser,
-    insertReportManually};
+    insertReportManually,
+    removeAllReportsOfUser};
