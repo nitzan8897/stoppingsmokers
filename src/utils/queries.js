@@ -1,5 +1,6 @@
 const CigaretteReport = require("../models/CigaretteReport");
 const SeasonManager = require("../services/SeasonManager");
+const HistoryReport = require("../models/HistoryReports");
 
 const getTopNSmokersInSeason = async (n, sortDirection) => {
     const topSmokers = await CigaretteReport.aggregate([
@@ -110,9 +111,29 @@ const insertReportManually = async (userId, date, season) => {
 }
 
 const removeAllReportsOfUser = async (userId) => {
+    const allReportsQuery = await CigaretteReport.find({ 'userId': userId }).exec();
+    const historyReportsOfUser = await HistoryReport.find({'userId': userId}).exec();
+
+    if (historyReportsOfUser) {
+        const mergedReports = [...allReportsQuery, ...historyReportsOfUser];
+        await HistoryReport.findOneAndUpdate({'userId': userId}, {$set: {'reports': mergedReports}});
+    } else {
+        const historyReport = new HistoryReport({userId, reports: allReportsQuery});
+        await historyReport.save();
+    }
+
     await CigaretteReport.find({ 'userId': userId }).delete().exec();
 }
 
+const tryToRecoverReportsOfUser = async (userId) => {
+    const userReports = await HistoryReport.find({'userId': userId});
+
+    if (!userReports) return;
+
+    userReports.forEach((userReport) => {
+        new CigaretteReport(userReport).save()
+    })
+}
 
 module.exports = {getTopNSmokersInSeason,
     getMostCommonTimestampOfUser,
@@ -123,4 +144,5 @@ module.exports = {getTopNSmokersInSeason,
     getCountOfUser,
     getLastCigaretteTimeOfUser,
     insertReportManually,
-    removeAllReportsOfUser};
+    removeAllReportsOfUser,
+    tryToRecoverReportsOfUser};
