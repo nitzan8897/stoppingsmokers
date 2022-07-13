@@ -17,6 +17,17 @@ class ClientUtils {
             console.error(e);
         }
     }
+
+    static async getAllUsersInChat(client) {
+        try {
+            const chat = await client.getChatById(client.chatId);
+            const participants = chat.participants.map((participant) => participant.id);
+
+            return participants;
+        } catch (e) {
+            console.error(e);
+        }
+    }
 }
 
 module.exports = ClientUtils;
