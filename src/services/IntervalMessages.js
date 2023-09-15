@@ -1,7 +1,7 @@
 const warnings = require('../../config/warnings.json')
 const SeasonManager = require('./SeasonManager')
 const CigaretteReport = require('../models/CigaretteReport')
-const {getAmountInADayOfUser} = require("../utils/queries");
+const { getAmountInADayOfUser } = require('../utils/queries')
 
 class IntervalMessages {
     #SECONDS_IN_A_DAY = 86400
@@ -31,7 +31,7 @@ class IntervalMessages {
         const totalSecondsToday = (hour * 60 + minutes) * 60 + seconds
         const timeUntilTomorrow =
             (this.#SECONDS_IN_A_DAY - totalSecondsToday) * 1000
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             setTimeout(() => {
                 resolve()
             }, timeUntilTomorrow - 1000 * 20)
@@ -58,8 +58,8 @@ class IntervalMessages {
             .exec()
         const mentions = []
         for (const contactId of contacts) {
-            const today = new Date();
-            const amount = await getAmountInADayOfUser(contactId, today);
+            const today = new Date()
+            const amount = await getAmountInADayOfUser(contactId, today)
             if (amount === 0) {
                 const contact = await this.client.getContactById(contactId)
                 message += ` @${contact.id.user}`

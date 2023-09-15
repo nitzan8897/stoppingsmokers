@@ -1,10 +1,6 @@
 const CigaretteReport = require('../models/CigaretteReport')
 const SeasonManager = require('./SeasonManager')
 
-// const incrementUserAmountInSeason = async (author) => {
-//   await SeasonMember.updateOne({season: SeasonManager.seasonNumber, userId: author}, {$inc: {amount: 1}});
-// }
-
 const logCigaretteReport = async (userId, date) => {
     const cigaretteReportLog = {
         month: date.getMonth(), // js Date.getMonth returns from 0.
@@ -17,7 +13,6 @@ const logCigaretteReport = async (userId, date) => {
     }
 
     try {
-        // await incrementUserAmountInSeason();
         const report = new CigaretteReport(cigaretteReportLog)
         await report.save()
     } catch (e) {
