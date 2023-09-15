@@ -1,4 +1,4 @@
-const answersMap = require('../../config/magicBall.json')
+const magicShellAnswers = require('../../config/magicShell.json')
 const OPEN_SENTENCE = '*קונכיית הקסם אומרת:*\n'
 
 module.exports.run = async (client) => {
@@ -10,11 +10,12 @@ module.exports.run = async (client) => {
             let fAnswer = answer.reading
             fAnswer = OPEN_SENTENCE + answersMap[fAnswer]
 
-            client.sendMessage(client.chatId, fAnswer)
-            console.log(fAnswer, { answer })
-        })
-        .catch((error) => {
-            console.error(error)
+            const answer =
+                magicShellAnswers.answers[
+                    Math.floor(Math.random() * magicShellAnswers.answers.length)
+                ]
+
+            client.sendMessage(client.chatId, OPEN_SENTENCE + answer)
         })
 }
 
