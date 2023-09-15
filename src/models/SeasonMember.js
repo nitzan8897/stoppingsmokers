@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const SeasonMember = mongoose.model("SeasonMember", {
+const SeasonMember = mongoose.model('SeasonMember', {
     season: Number,
     userId: String,
-    amount: Number
-});
+    amount: Number,
+})
 
-module.exports = SeasonMember;
+module.exports = SeasonMember

@@ -3,3 +3,4 @@ session.json
 .idea/
 .vscode/
 .wwebjs_auth
+package-lock.json/
