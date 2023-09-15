@@ -1,3 +1,5 @@
+const consoleColorCodes = require('../../config/consts')
+
 class ConfigHandler {
     constructor(client) {
         this.client = client
@@ -5,12 +7,15 @@ class ConfigHandler {
 
     init() {
         this.client.chatId = process.env.SMOKING_GROUP
-        console.log("Initialized config handler with chatId: " + this.client.chatId);
+        console.info(
+            consoleColorCodes.boldGreen,
+            `{ ConfigHandler: Initialized Config Handler with chatId: ${this.client.chatId} }`
+        )
         this.client.sendBotMessage = (chatId, message, options) => {
             const newMessage =
-                '----------------------------------------\n' +
+                '-----------------------------------\n' +
                 message +
-                '\n----------------------------------------'
+                '\n-----------------------------------'
             this.client.sendMessage(chatId, newMessage, options)
         }
     }

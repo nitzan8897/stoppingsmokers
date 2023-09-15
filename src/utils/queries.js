@@ -1,93 +1,96 @@
-const CigaretteReport = require("../models/CigaretteReport");
-const SeasonManager = require("../services/SeasonManager");
+const CigaretteReport = require('../models/CigaretteReport')
+const SeasonManager = require('../services/SeasonManager')
 
 const getTopNSmokersInSeason = async (n, sortDirection) => {
     const topSmokers = await CigaretteReport.aggregate([
-        {$match: {season: SeasonManager.seasonNumber}},
-        {$group: {_id: '$userId', total: {$sum: 1}}},
-        {$sort: {total: sortDirection}},
-        {$limit: n}
-    ]).exec();
+        { $match: { season: SeasonManager.seasonNumber } },
+        { $group: { _id: '$userId', total: { $sum: 1 } } },
+        { $sort: { total: sortDirection } },
+        { $limit: n },
+    ]).exec()
 
-    return topSmokers;
+    return topSmokers
 }
 
 const getMostCommonTimestampOfUser = async (userId, timestamp, limit) => {
     const mostLovedTimestamp = await CigaretteReport.aggregate([
-        {$match: {'userId': userId}},
-        {$group: {_id: timestamp, total: {$sum: 1}}},
-        {$sort: {total: -1}},
-        {$limit: limit}
-    ]).exec();
+        { $match: { userId: userId } },
+        { $group: { _id: timestamp, total: { $sum: 1 } } },
+        { $sort: { total: -1 } },
+        { $limit: limit },
+    ]).exec()
 
-    return mostLovedTimestamp;
+    return mostLovedTimestamp
 }
 
 const getAmountInADayOfUser = async (userId, date) => {
-    const dayStartDate = new Date(date).setHours(0, 0, 0, 0);
-    const dayEndDate = new Date(date).setHours(23, 59, 59, 999);
+    const dayStartDate = new Date(date).setHours(0, 0, 0, 0)
+    const dayEndDate = new Date(date).setHours(23, 59, 59, 999)
 
     const amountInADay = await CigaretteReport.count({
         date: { $lte: dayEndDate, $gte: dayStartDate },
-        userId: userId
-    }).exec();
+        userId: userId,
+    }).exec()
 
-    return amountInADay;
+    return amountInADay
 }
 
 const getAveragePerDayOfUser = async (userId) => {
     const amountPerDay = await CigaretteReport.aggregate([
-        {$match: {'userId': userId}},
+        { $match: { userId: userId } },
         {
             $group: {
                 _id: {
                     year: '$year',
                     month: '$month',
-                    day: '$day'
+                    day: '$day',
                 },
-                total: {$sum: 1},
-            }
+                total: { $sum: 1 },
+            },
         },
-        {$group :
-                {
-                    _id: "1",
-                    average: {$avg:"$total"},
-                }
-        }
-    ]);
+        {
+            $group: {
+                _id: '1',
+                average: { $avg: '$total' },
+            },
+        },
+    ])
 
-    return amountPerDay[0].average;
+    return amountPerDay[0].average
 }
 
 const getCountOfUserThisSeason = async (userId) => {
     const amount = await CigaretteReport.count({
         userId: userId,
-        season: SeasonManager.seasonNumber
-    }).exec();
+        season: SeasonManager.seasonNumber,
+    }).exec()
 
-    return amount;
+    return amount
 }
 
 const getCountPerSeasonOfUser = async (userId) => {
     const amountPerSeason = await CigaretteReport.aggregate([
-        {$match: {'userId': userId}},
-        {$group: {_id: '$season', total: {$sum: 1}}},
-        {$sort: {_id: 1}}
-    ]).exec();
+        { $match: { userId: userId } },
+        { $group: { _id: '$season', total: { $sum: 1 } } },
+        { $sort: { _id: 1 } },
+    ]).exec()
 
-    return amountPerSeason;
+    return amountPerSeason
 }
 
 const getCountOfUser = async (userId) => {
-    const count = await CigaretteReport.count({'userId': userId}).exec();
+    const count = await CigaretteReport.count({ userId: userId }).exec()
 
-    return count;
+    return count
 }
 
 const getLastCigaretteTimeOfUser = async (userId) => {
-    const lastCigaretteTime = await CigaretteReport.findOne({'userId': userId}).sort({date: -1}).select('date').exec();
+    const lastCigaretteTime = await CigaretteReport.findOne({ userId: userId })
+        .sort({ date: -1 })
+        .select('date')
+        .exec()
 
-    return lastCigaretteTime;
+    return lastCigaretteTime
 }
 
 const insertReportManually = async (userId, date, season) => {
@@ -98,7 +101,7 @@ const insertReportManually = async (userId, date, season) => {
         hour: new Date(date).getHours(),
         date: new Date(date),
         userId,
-        season
+        season,
     }
 
     try {
@@ -109,8 +112,8 @@ const insertReportManually = async (userId, date, season) => {
     }
 }
 
-
-module.exports = {getTopNSmokersInSeason,
+module.exports = {
+    getTopNSmokersInSeason,
     getMostCommonTimestampOfUser,
     getAmountInADayOfUser,
     getAveragePerDayOfUser,
@@ -118,4 +121,5 @@ module.exports = {getTopNSmokersInSeason,
     getCountPerSeasonOfUser,
     getCountOfUser,
     getLastCigaretteTimeOfUser,
-    insertReportManually};
+    insertReportManually,
+}

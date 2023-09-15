@@ -26,5 +26,5 @@ module.exports.run = async (client) => {
 };
 
 module.exports.config = {
-    name: "🐚"
-};
+    name: '🐚',
+}
