@@ -4,3 +4,5 @@ session.json
 .vscode/
 .wwebjs_auth
 package-lock.json/
+.wwebjs_auth/
+.wwebjs_cache
